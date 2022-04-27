@@ -1,11 +1,13 @@
+import styles from './pokecard.css'
+
 export default function PokeCard({ pokemon }) {
-  console.log('pokeCard!!!', pokemon.url_image)
+  
   return (
-    <>
+    <div className={styles['poke-card']} style={{backgroundColor: `${pokemon.color}`}}>
     <p>
       ({pokemon.id}){pokemon.name}
     </p>
     <img src={pokemon.img} alt='pokemon image'/>
-    </>
+    </div>
   )
 }
