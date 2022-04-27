@@ -24,7 +24,7 @@ useEffect(() => {
   return (
     <>
     <ul>
-      {pokemon.map((pokemon) => <li><PokeCard pokemon={pokemon}/></li>)}
+      {isLoading ? (<p>Loading Pokemon...</p>) : pokemon.map((pokemon) => <li><PokeCard pokemon={pokemon}/></li>)}
     </ul>
     </>
   )
