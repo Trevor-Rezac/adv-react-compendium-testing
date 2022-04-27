@@ -5,6 +5,31 @@ import styles from './pokemonlist.css'
 export default function PokemonList() {
 const [pokemon, setPokemon] = useState([])
 const [isLoading, setIsLoading] = useState(true)
+const [searchQuery, setSearchQuery] = useState('');
+const [searchResults, setSearchResults] = useState([]);
+
+const isSearching = !!searchQuery.length;
+const noResults = isSearching && !searchResults.length;
+const pokemonList = isSearching ? searchResults : pokemon;
+
+const handleSearch = (e) => {
+  setSearchQuery(e.target.value);
+  
+  const filteredPokemon = pokemon.filter((pokemon) => pokemon.name
+      .toLowerCase()
+      .includes(e.target.value.toLowerCase().trim()));
+
+  setSearchResults(filteredPokemon);
+
+}
+
+useEffect(() => {
+  const filteredPokemon = pokemon.filter((pokemon) => pokemon.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase().trim()));
+
+  setSearchResults(filteredPokemon);
+}, []);
 
 useEffect(() => {
   const getPokemon = async () => {
@@ -29,9 +54,17 @@ useEffect(() => {
     
       {isLoading 
       ? (<p>Loading Pokemon...</p>) 
-      : <div className={styles['poke-list']}> 
-        {pokemon.map((pokemon) => <PokeCard pokemon={pokemon}/>)}
-        </div>}
+      : <>
+          <input 
+          placeholder='Find Pokemon'
+          value={searchQuery}
+          onChange={(e) => handleSearch(e)}
+          />
+          <div className={styles['poke-list']}> 
+            {pokemonList.map((pokemon) => <PokeCard pokemon={pokemon} key={pokemon.id}/>)}
+          </div>
+        </>
+        }
     
     </>
   )
