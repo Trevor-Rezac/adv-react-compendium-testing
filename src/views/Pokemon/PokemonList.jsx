@@ -14,13 +14,10 @@ const pokemonList = isSearching ? searchResults : pokemon;
 
 const handleSearch = (e) => {
   setSearchQuery(e.target.value);
-  
   const filteredPokemon = pokemon.filter((pokemon) => pokemon.name
       .toLowerCase()
       .includes(e.target.value.toLowerCase().trim()));
-
   setSearchResults(filteredPokemon);
-
 }
 
 useEffect(() => {
@@ -65,7 +62,7 @@ useEffect(() => {
           </div>
         </>
         }
-    
+      {noResults && <p>No Results!</p>}
     </>
   )
 }
