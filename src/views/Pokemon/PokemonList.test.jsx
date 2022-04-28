@@ -4,7 +4,7 @@ import PokemonList from './PokemonList'
 import userEvent from '@testing-library/user-event'
 
 describe('Pokemon List test', () => {
-  it('should render an input field for searching and a list of cards with a pokemon id, name and image', async () => {
+  it('should render an input field for searching and a list of cards with a pokemon name and image', async () => {
     render (
       <MemoryRouter>
         <PokemonList />
@@ -36,11 +36,21 @@ describe('Pokemon List test', () => {
     userEvent.type(searchInput, 'butter')
     console.log('searchInput after userEVENT', searchInput)
     
-    //checks that only butterfree appears on screen after user event
+    //checks that only butterfree text appears on screen after user event 
+    // return waitFor(() => {
+    //   const searchResult = screen.getByText(/butterfree/i)
+    //   screen.debug();
+    //   expect(searchResult.textContent).toEqual('butterfree')
+    // })
+    
+    //this also works by getting the heading role, h3 is level 3
     return waitFor(() => {
-      const searchResult = screen.getByText(/butterfree/i)
+      const searchResult = screen.getByRole('heading', {
+        level: 3,
+      });
+
       screen.debug();
       expect(searchResult.textContent).toEqual('butterfree')
-    })
+    }) 
   })
 })
